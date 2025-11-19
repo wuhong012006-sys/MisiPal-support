@@ -1,0 +1,24 @@
+# GitHub Actions Workflow for deploying static content (like your index.html)
+name: Deploy GitHub Pages Static
+
+on:
+  push:
+    branches:
+      - main  # 當 main 分支有新的提交時觸發
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 這是關鍵步驟：使用官方 Pages 部署 Action
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        
+      - name: Finalize Deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: . # 指向整個 Repository 根目錄，包含您的 index.html
